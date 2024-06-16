@@ -1,15 +1,15 @@
 # this shit don work bro :(
 
-
-from networkx import is_path
 import requests
 from bs4 import BeautifulSoup
 import csv
 import os
-import networkx
 
 # URL to scrape
 URL = "https://www.bbc.com/news"
+
+# Path to save the CSV file
+file_path = "article_titles.csv"
 
 try:
     # Send GET request
@@ -22,14 +22,16 @@ try:
     # Find all article titles
     titles = soup.find_all("h3", class_="gs-c-promo-heading__title")
 
+    # Check if file exists
+    file_exists = os.path.isfile(file_path)
+
     # Open a CSV file to write the titles
-    with open(is_path, "a", newline="", encoding="utf-8") as file:
+    with open(file_path, "a", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         
-        
+        # Write header if file does not exist
         if not file_exists:
             writer.writerow(["Title"])
-        
         
         # Extract and write the text of each title
         for title in titles:
